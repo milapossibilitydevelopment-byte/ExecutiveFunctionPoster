@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brain Powers Full Scale — Kid Version</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FBF7EF;
+  --ink:#22303A;
+  --muted:#5E6B73;
+  --teal:#2E7D77;
+  --teal-deep:#123A42;
+  --teal-line:#1F9E93;
+  --pop:#F0973F;
+  --pop-ink:#C9781F;
+  --card-ink:#EAF6F4;
+  --font:'Lexend',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:var(--font);background:var(--bg);color:var(--ink);
+  -webkit-font-smoothing:antialiased;padding:24px 18px 60px;line-height:1.5;
+}
+.wrap{max-width:1080px;margin:0 auto}
+
+/* title banner (echoes the original) */
+.banner{
+  background:var(--teal);color:#fff;border-radius:22px;text-align:center;
+  padding:18px 26px;margin:0 auto 8px;box-shadow:0 7px 0 var(--teal-deep);
+  border:3px solid var(--teal-line);max-width:840px;
+}
+.banner h1{font-size:clamp(1.6rem,4.5vw,2.5rem);font-weight:800;letter-spacing:-.01em;line-height:1.1}
+.banner .sub{font-weight:500;font-size:1rem;opacity:.92;margin-top:2px}
+
+.legend{
+  text-align:center;color:var(--muted);font-size:.98rem;font-weight:500;
+  margin:12px auto 20px;max-width:660px;display:flex;gap:10px;align-items:center;justify-content:center;
+}
+.legend .speak{width:34px;height:34px;font-size:.95rem;box-shadow:0 3px 0 var(--pop-ink)}
+
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{
+  background:var(--teal-deep);color:var(--card-ink);border:3px solid var(--teal-line);
+  border-radius:20px;padding:16px 16px 15px;box-shadow:0 6px 0 rgba(18,58,66,.5);
+  position:relative;min-height:150px;display:flex;flex-direction:column;
+}
+.card .top{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.card .emoji{
+  font-size:1.9rem;line-height:1;background:rgba(255,255,255,.1);
+  width:46px;height:46px;border-radius:13px;display:grid;place-items:center;flex-shrink:0;
+}
+.card .names{flex:1;min-width:0}
+.card h2{font-size:1.16rem;font-weight:800;line-height:1.12;color:#fff}
+.card .real{font-size:.74rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--teal-line);margin-top:1px}
+.card p{font-size:.95rem;font-weight:400;line-height:1.42;color:var(--card-ink)}
+.card .speak{
+  position:absolute;top:12px;right:12px;width:34px;height:34px;font-size:.95rem;
+  box-shadow:0 3px 0 var(--pop-ink);
+}
+
+.speak{
+  display:inline-flex;align-items:center;justify-content:center;border-radius:50%;
+  background:var(--pop);color:#fff;flex-shrink:0;transition:transform .1s;cursor:pointer;border:none;
+}
+.speak:hover{transform:translateY(-2px)}
+.speak:active{transform:translateY(2px)}
+.speak.playing{background:#E56B6F;box-shadow:0 3px 0 #B4494D}
+
+.foot{
+  text-align:center;color:var(--muted);font-size:.85rem;margin-top:22px;
+  border-top:1px solid #E4DECF;padding-top:14px;
+}
+.foot b{color:var(--ink)}
+.print-btn{
+  display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;
+  font-family:inherit;font-weight:700;font-size:.95rem;border:none;border-radius:12px;
+  padding:10px 20px;box-shadow:0 4px 0 var(--teal-deep);cursor:pointer;margin-top:14px;
+}
+.print-btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--teal-deep)}
+
+@media (max-width:800px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:520px){
+  .grid{grid-template-columns:1fr}
+}
+@media print{
+  @page{size:landscape;margin:12mm}
+  body{background:#fff;padding:0}
+  .speak,.legend,.print-btn{display:none!important}
+  .banner{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .card{
+    box-shadow:none;break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact;
+    min-height:0;
+  }
+  .grid{gap:10px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="banner">
+    <h1>🧠 Brain Powers Full Scale</h1>
+    <div class="sub">The 9 powers every kid's brain is growing</div>
+  </div>
+
+  <div class="legend">
+    <button class="speak" data-say="These are brain powers. Everybody has them. They get stronger with practice. Tap a speaker to hear one out loud.">🔊</button>
+    <span>Everybody has these powers — and they all get stronger with practice. Tap 🔊 to hear one.</span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="foot">
+    <p>Each power matches a character in the <b>Brain Powers HQ</b> practice tool.</p>
+    <button class="print-btn" onclick="window.print()">🖨️ Print this poster</button>
+  </div>
+
+</div>
+
+<script>
+const POWERS=[
+  {emoji:'🔦',name:'The Focus Beam',real:'Attention',
+   def:'How well a kid can keep their mind on one thing and not get pulled away by every little distraction.'},
+  {emoji:'🛑',name:'The Brakes',real:'Stop-and-Think',
+   def:'How well a kid can stop for a second and think before they do or say something.'},
+  {emoji:'🗺️',name:'The Map Maker',real:'Planning',
+   def:'How well a kid can make a plan and figure out the steps to get something done.'},
+  {emoji:'🌋',name:'The Volcano Tamer',real:'Emotion Control',
+   def:'How well a kid can handle big, hot feelings so they don\u2019t boil over and take charge.'},
+  {emoji:'🚀',name:'The Starter',real:'Getting Going',
+   def:'How well a kid can begin a job on their own, without being told again and again.'},
+  {emoji:'🧠',name:'The Inner Coach',real:'Self-Checking',
+   def:'How well a kid can notice how they\u2019re doing and check their own work as they go.'},
+  {emoji:'🌊',name:'The Bender',real:'Flexibility',
+   def:'How well a kid can go with a change and try a new way when the first way doesn\u2019t work.'},
+  {emoji:'📦',name:'The Sorter',real:'Organizing',
+   def:'How well a kid keeps track of their stuff, their papers, and their space.'},
+  {emoji:'🎒',name:'The Backpack',real:'Working Memory',
+   def:'How well a kid can hold important things in mind — like directions and steps — while they work.'}
+];
+
+const grid=document.getElementById('grid');
+POWERS.forEach(p=>{
+  const c=document.createElement('div');
+  c.className='card';
+  c.innerHTML=`
+    <button class="speak" title="Hear it">🔊</button>
+    <div class="top">
+      <div class="emoji">${p.emoji}</div>
+      <div class="names">
+        <h2>${p.name}</h2>
+        <div class="real">${p.real}</div>
+      </div>
+    </div>
+    <p>${p.def}</p>`;
+  c.querySelector('.speak').onclick=function(){speak(p.name+'. '+p.def,this)};
+  grid.appendChild(c);
+});
+
+let speaking=null;
+function speak(text,btn){
+  if(!('speechSynthesis'in window))return;
+  window.speechSynthesis.cancel();
+  if(speaking===btn){speaking=null;document.querySelectorAll('.speak').forEach(b=>b.classList.remove('playing'));return}
+  const u=new SpeechSynthesisUtterance(text);u.rate=.92;u.pitch=1.05;
+  u.onend=()=>{if(btn)btn.classList.remove('playing');speaking=null};
+  document.querySelectorAll('.speak').forEach(b=>b.classList.remove('playing'));
+  if(btn)btn.classList.add('playing');speaking=btn;
+  window.speechSynthesis.speak(u);
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.speak[data-say]');
+  if(b)speak(b.dataset.say,b);
+});
+</script>
+</body>
+</html>
